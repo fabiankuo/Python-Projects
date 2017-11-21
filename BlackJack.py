@@ -53,7 +53,7 @@ class Player(object):
             self.hand['points']['normal']+=card.number
             self.hand['points']['ace']+=11
         else:
-            self.hand['points']['nomral']+=card.number
+            self.hand['points']['normal']+=card.number
             self.hand['points']['ace']+=card.number            
        
         if (self.hand['points']['ace']>21) & (self.hand['points']['normal']>21):
@@ -506,112 +506,4 @@ def game():
 
 
 game()
-
-
-# In[ ]:
-
-
-aceCard = Card(1,'cloves',7)
-jackCard = Card(1,'cloves',1)
-
-
-# In[ ]:
-
-
-player.addCard(aceCard)
-
-player.addCard(jackCard)
-
-
-# In[ ]:
-
-
-player.checkHand()
-for card in  player.hand['cards']:
-    print card.suit+ ' '+ str(card.number)
-
-
-# In[ ]:
-
-
-player.hand['containsAce']
-
-
-# In[ ]:
-
-
-player.hand['points']['ace']
-
-
-# In[ ]:
-
-
-player.hand['points']['normal']
-
-
-# In[ ]:
-
-
-returnHigherPoint(player)
-
-
-# In[ ]:
-
-
-def addPoints1(card, player):
-        if card.number > 10:
-            player.hand['points']['normal']+=10
-        else:
-            player.hand['points']['normal']+=card.number
-        if player.hand['containsAce']:
-            print player.hand['containsAce']
-            if card.number == 1:
-                print 'card number = 1'
-                print 'actual card number: '+ str(card.number)
-                player.hand['points']['ace']+= 11
-                print str(player.hand['points']['ace'])
-            elif card.number > 10:
-                print 'card number > 10'
-                print 'actual card number: '+ str(card.number)
-                player.hand['points']['ace']+= 10
-                print str(player.hand['points']['ace'])
-            else:
-                'actual card number: '+ str(card.number)
-                print 'card number between 1 and 10'                 
-                player.hand['points']['ace']+= card.number
-                print str(player.hand['points']['ace'])
-            if (player.hand['points']['ace']>21) & (player.hand['points']['normal']>21):
-                player.hand['busted'] = True
-        elif player.hand['points']['normal']> 21:
-            player.hand['busted'] = True
-
-
-# In[ ]:
-
-
-player1 = Player({'cards': [], 'containsAce':False, 'points':{'normal':0,'ace':0},'busted':False})
-
-
-# In[ ]:
-
-
-addPoints1(aceCard, player1)
-
-
-# In[ ]:
-
-
-player1.addCard(aceCard)
-
-
-# In[ ]:
-
-
-player1.hand['points']['ace']
-
-
-# In[ ]:
-
-
-player1.hand['points']['normal']
 
