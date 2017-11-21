@@ -126,13 +126,13 @@ class Deck(object):
         for x in xrange(1,5):
             for num in xrange(1,14):
                 if x == 1:
-                    card = Card(x,'Cloves',num)                    
+                    card = Card(x,'Cloves',num)            
                 elif x == 2:
                     card = Card(x,'Diamonds',num)
                 elif x == 3:
                     card = Card(x,'Hearts', num)
                 elif x == 4:
-                    card = Card(x,'Spades', num)
+                    card = Card(x,'Spades',num)
                 self.deck.append(card)
                 
     def shuffleDeck(self):
@@ -189,8 +189,17 @@ def dealerAction(dealer,deck):
                     print 'The dealer had busted!'
                     break
                 elif dealer.hand['containsAce']:
-                    if (dealer.hand['points']['ace']>=17) & (dealer.hand['points']['normal']>=17):    
+                    if (dealer.hand['points']['ace']>=17) & (dealer.hand['points']['normal']>=17):
+                        dealer.hand['busted'] = True
                         break
+                    elif (dealer.hand['points']['normal']>=17):
+                        break
+                    else:
+                        dealer.addCard(dealer.dealCard(deck))
+                        if dealer.hand['containsAce']:
+                            print "Dealer's points with Ace as 11: "+ str(dealer.hand['points']['ace'])
+                        dealer.checkHand()
+                        print "Dealer's points"+ str(dealer.hand['points']['normal']) 
                 elif dealer.hand['points']['normal']>=17:
                     break
                 else:
@@ -212,8 +221,8 @@ def playerAction(player, deck, dealer):
     if player.bet == 0:
         player.placeBet()        
     
-    #if checkForBlackJack(player):
-       # return
+    if checkForBlackJack(player):
+        return
     
     print "Dealer's first card: "+ dealer.hand['cards'][0].suit+' '+ str(dealer.hand['cards'][0].number)
     
@@ -430,8 +439,8 @@ def initGame():
     print "Welcome to Fk's Black Jack Game!"
     choice = 'O'
     while True:
-        choice = raw_input("Enter 'Y' to play or 'N' to leave")
-        if choice.upper() != 'Y' and choice.upper() != 'N':
+        choice = raw_input("Enter 'Y' to play or 'N' to leave")      
+        if (choice.upper() != 'Y') and (choice.upper() != 'N'):
             print 'Please enter a valid input.'
         else:
             break
@@ -472,6 +481,7 @@ def playGame():
 def continueGame():
     choice = raw_input("Enter 'Y' if you wish to continue to play, or any key to quit: ")
     if choice.upper() == 'Y':
+
         return True
     else:
         return False
